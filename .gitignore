@@ -1,0 +1,19 @@
+# Credenciais
+.env
+.env.*
+!.env.example
+
+# Ambientes virtuais
+venv/
+.venv/
+
+# Arquivos gerados pelo Python
+__pycache__/
+*.py[cod]
+
+# Arquivos de desenvolvimento
+.vscode/
+.pytest_cache/
+
+# Dados temporários
+*.log
