@@ -7,6 +7,7 @@ from fastapi.responses import RedirectResponse,HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 
+import json
 import os
 import secrets 
 from urllib.parse import urlencode
@@ -82,8 +83,21 @@ def callback(request:Request, code: str, state:str):
 
         response = requests.post(url=url, headers=headers, data=payload)
 
-        return {'status_code': response.status_code,
-                'sucess': response.ok}
+        json_response = response.json()
+        access_token = json_response["access_token"]
+        playlist_id = '4ZJAr8cne9dYPztvQijXmm'
+        url_playlist = f'https://api.spotify.com/v1/playlists/{playlist_id}/items'
+        headers = {
+            'Authorization': f'Bearer {access_token}'
+        }
 
-    else:
-        return {"message":"ERROR!"}
+        playlist_request = requests.get(url=url_playlist, headers=headers)
+
+        playlist_request_response = playlist_request.json()
+
+
+        musicas = []
+        for music in playlist_request_response["items"]:
+            musicas.append(music["item"]["name"])
+
+    return musicas

@@ -2,7 +2,6 @@ import os
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 
-
 def configure_session(app: FastAPI):
     secret_key = os.getenv("SESSION_SECRET_KEY")
 
